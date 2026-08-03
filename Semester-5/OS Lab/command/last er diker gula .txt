@@ -1,0 +1,219 @@
+lab@lab-VirtualBox:~$ history
+    1  ls
+    2  cd ..
+    3  ls
+    4  cd ..
+    5  ls
+    6  cd bin
+    7  ls
+    8  touch one.txt
+    9  sudo one.txt
+   10  exit
+   11  sudo touch one.txt
+   12  ls
+   13  cd ..
+   14  ls
+   15  cd bin
+   16  ls
+   17  touch one.txt
+   18  sudo one.txt
+   19  sudo touch one.txt
+   20  ls
+   21  clear
+   22  grep one.txt
+   23  ls
+   24  clear
+   25  ls
+   26  pwd
+   27  cd Desktop
+   28  ls
+   29  mkdir folder1
+   30  ls
+   31  cd folder1
+   32  cat>one.txt
+   33  cat one.txt
+   34  chmod -r one.txt
+   35  cat one.txt
+   36  chmod +r one.txt
+   37  cat one.txt
+   38  chmod -w one.txt
+   39  cat>>one.txt
+   40  chmod +w one.txt
+   41  cat>>one.txt
+   42  cat one.txt
+   43  chmod -rw one.txt
+   44  chmod +rw one.txt
+   45  cd ../../..
+   46  ls
+   47  cd ../../..
+   48  ls
+   49  pwd
+   50  ls
+   51  cd bin
+   52  ls
+   53  pwd
+   54  touch 1.txt
+   55  sudo touch 1.txt
+   56  ls
+   57  clear
+   58  ls
+   59  top
+   60  ps -p gnome-clocks
+   61  pidof gnome-clocks
+   62  clear
+   63  pidof gnome-clocks
+   64  ps -p 4343
+   65  pgrep clock
+   66  pgrep gnome
+   67  ps -p 4246 
+   68  ps -p 878
+   69  pgrep firefox
+   70  ps -p 4398
+   71  pidof firefox
+   72  kill 4343
+   73  pidof gnome-clock
+   74  pidof gnome-clocks
+   75  kill 5429
+   76  kill 5347
+   77  kill 4398
+   78  pidof firefox
+   79  pgrep firefox
+   80  killall firefox
+   81  gnome-clocks
+   82  history
+   83  gnome-calendar
+   84  pgrep calc
+   85  ps -p 6541
+   86  gnome-calculato
+   87  gnome-calculator
+   88  clear
+   89  history
+   90  killall gnome-calculator
+   91  pidof gnome-clocks
+   92  kill -9 6491\
+   93  gnome-calculator
+   94  pidof gnome-calculator
+   95  kill 6650
+   96  kill -9 6650
+   97  pkill calculator
+   98  pidof gnome-calculator
+   99  pkill calculator
+  100  pkill -9 calculator
+  101  history
+  102  sudo apt update
+  103  sudo apt install gcc
+  104  gcc --version
+  105  sudo apt install gcc
+  106  gcc --version
+  107  ls
+  108  cd Desktop
+  109  ls
+  110  cd codes
+  111  mkdir codes
+  112  cd codes
+  113  nano one.c
+  114  gcc one.c -o one
+  115  ./one
+  116  nano one.c
+  117  gcc one.c -o one
+  118  ./one
+  119  man write
+  120  man 2 write
+  121  nano write.c
+  122  gcc write.c -o write
+  123  ./write
+  124  nano write.c
+  125  gcc write.c -o write
+  126  ./write
+  127  nano write.c
+  128  ./write
+  129  gcc write.c -o write
+  130  ./write
+  131  nano write.c
+  132  gcc write.c -o write
+  133  nano write.c
+  134  gcc write.c -o write
+  135  ./write
+  136  nano write.c
+  137  gcc write.c -o write
+  138  ./write
+  139  nano write.c
+  140  gcc write.c -o write
+  141  nano write.c
+  142  gcc write.c -o write
+  143  nano write.c
+  144  gcc write.c -o write
+  145  ./write
+  146  nano write.c
+  147  gcc write.c -o write
+  148  ./write
+  149  nano write.c
+  150  gcc write.c -o write
+  151  ./write
+  152  nano write.c
+  153  gcc write.c -o write
+  154  nano write.c
+  155  gcc write.c -o write
+  156  ./write
+  157  nano write.c
+  158  gcc write.c -o write
+  159  ./write
+  160  nano write.c
+  161  nano read.c
+  162  man 2 read
+  163  gcc read.c -o read
+  164  ./read
+  165  nano read.c
+  166  gcc read.c -o read
+  167  ./read
+  168  nano read.c
+  169  gcc read.c -o read
+  170  nano read.c
+  171  gcc read.c -o read
+  172  ./read
+  173  nano read.c
+  174  pwd
+  175  ls
+  176  cd Desktop
+  177  ls
+  178  cd codes
+  179  ls
+  180  man 2 open
+  181  ls
+  182  cat>>one.txt
+  183  cat one.txt
+  184  nano open1.c
+  185  gcc open1.c -o open1
+  186  ./open1
+  187  nano open1.c
+  188  gcc open1.c -o open1
+  189  ./open1
+  190  nano open1.c
+  191  gcc open1.c -o open1
+  192  ./open1
+  193  nano open1.c
+  194  gcc open1.c -o open1
+  195  ./open1
+  196  nano open1.c
+  197  gcc open1.c -o open1
+  198  ./open1
+  199  nano open1.c
+  200  gcc open1.c -o open1
+  201  ./open1
+  202  nano open1.c
+  203  gcc open1.c -o open1
+  204  ./open1
+  205  nano open1.c
+  206  gcc open1.c -o open1
+  207  ./open1
+  208  nano open1.c
+  209  gcc open1.c -o open1
+  210  ./open1
+  211  nano open1.c
+  212  gcc open1.c -o open1
+  213  ./open1
+  214  nano open1.c
+  215  gcc open1.c -o open1
+  216  nano open1.c
+  217  nano open1.c
+  218  history
