@@ -1,0 +1,3 @@
+likes(rai,Chips).
+loves(raju,rani).
+male(Rahim).

@@ -1,0 +1,394 @@
+description,location,days_open,priority
+Trash overflow,industrial,170,Low
+Roadside debris,commercial,34,Medium
+Noise complaint,residential,15,High
+Streetlight not working,industrial,168,Low
+Fallen tree,industrial,65,Medium
+Trash overflow,commercial,74,Medium
+Broken traffic signal,residential,128,Low
+Broken traffic signal,public park,106,Low
+Fallen tree,residential,90,Medium
+Illegal dumping,commercial,28,High
+Stray animals,public park,130,Low
+Streetlight not working,commercial,54,Medium
+Roadside debris,public park,28,High
+Streetlight not working,commercial,117,Low
+Noise complaint,highway,97,Low
+Broken traffic signal,public park,130,Low
+Broken traffic signal,public park,105,Low
+Streetlight not working,industrial,10,High
+Streetlight not working,public park,82,Medium
+Trash overflow,highway,102,Low
+Pothole on road,highway,156,Low
+Weeds on sidewalk,public park,156,Low
+Sewer issue,public park,118,Low
+Pothole on road,commercial,89,Medium
+Weeds on sidewalk,residential,82,Medium
+Sewer issue,industrial,48,Medium
+Trash overflow,highway,107,Low
+Noise complaint,residential,131,Low
+Broken traffic signal,commercial,58,Medium
+Stray animals,residential,113,Low
+Roadside debris,industrial,47,Medium
+Pothole on road,public park,87,Medium
+Roadside debris,commercial,129,Low
+Blocked drain,commercial,59,Medium
+Trash overflow,highway,138,Low
+Fallen tree,residential,7,High
+Illegal dumping,commercial,61,Medium
+Blocked drain,public park,35,Medium
+Fallen tree,industrial,143,Low
+Noise complaint,commercial,9,High
+Water leakage,industrial,126,Low
+Trash overflow,highway,146,Low
+Weeds on sidewalk,industrial,161,Low
+Trash overflow,highway,18,High
+Illegal dumping,commercial,19,High
+Roadside debris,highway,19,High
+Water leakage,commercial,97,Low
+Roadside debris,public park,46,Medium
+Blocked drain,commercial,179,Low
+Blocked drain,public park,138,Low
+Fallen tree,commercial,107,Low
+Weeds on sidewalk,commercial,53,Medium
+Pothole on road,highway,179,Low
+Noise complaint,highway,42,Medium
+Water leakage,highway,93,Low
+Blocked drain,commercial,129,Low
+Water leakage,industrial,170,Low
+Blocked drain,industrial,36,Medium
+Trash overflow,highway,60,Medium
+Pothole on road,highway,13,High
+Stray animals,industrial,91,Low
+Stray animals,industrial,52,Medium
+Stray animals,commercial,148,Low
+Pothole on road,industrial,47,Medium
+Illegal dumping,commercial,107,Low
+Illegal dumping,commercial,71,Medium
+Water leakage,highway,118,Low
+Stray animals,residential,44,Medium
+Broken traffic signal,highway,136,Low
+Streetlight not working,public park,7,High
+Blocked drain,highway,139,Low
+Pothole on road,industrial,57,Medium
+Pothole on road,commercial,103,Low
+Streetlight not working,commercial,15,High
+Fallen tree,highway,124,Low
+Pothole on road,highway,179,Low
+Illegal dumping,highway,33,Medium
+Stray animals,industrial,44,Medium
+Sewer issue,public park,13,High
+Water leakage,industrial,88,Medium
+Stray animals,industrial,20,High
+Blocked drain,industrial,77,Medium
+Stray animals,residential,164,Low
+Water leakage,commercial,17,High
+Trash overflow,highway,121,Low
+Pothole on road,industrial,112,Low
+Sewer issue,highway,142,Low
+Sewer issue,industrial,10,High
+Illegal dumping,highway,103,Low
+Illegal dumping,public park,139,Low
+Fallen tree,public park,24,High
+Roadside debris,public park,112,Low
+Broken traffic signal,residential,101,Low
+Fallen tree,commercial,55,Medium
+Trash overflow,commercial,102,Low
+Stray animals,residential,89,Medium
+Sewer issue,highway,26,High
+Noise complaint,commercial,179,Low
+Stray animals,commercial,164,Low
+Stray animals,public park,26,High
+Streetlight not working,highway,144,Low
+Water leakage,residential,50,Medium
+Roadside debris,commercial,89,Medium
+Illegal dumping,residential,75,Medium
+Blocked drain,public park,18,High
+Blocked drain,residential,48,Medium
+Weeds on sidewalk,residential,30,High
+Trash overflow,residential,75,Medium
+Illegal dumping,commercial,133,Low
+Sewer issue,public park,37,Medium
+Streetlight not working,highway,114,Low
+Illegal dumping,residential,133,Low
+Water leakage,commercial,30,High
+Pothole on road,highway,136,Low
+Trash overflow,public park,92,Low
+Noise complaint,highway,114,Low
+Illegal dumping,industrial,163,Low
+Illegal dumping,industrial,55,Medium
+Illegal dumping,residential,163,Low
+Fallen tree,public park,66,Medium
+Roadside debris,public park,30,High
+Water leakage,industrial,133,Low
+Broken traffic signal,highway,70,Medium
+Roadside debris,public park,11,High
+Weeds on sidewalk,residential,119,Low
+Pothole on road,public park,18,High
+Broken traffic signal,highway,104,Low
+Water leakage,industrial,174,Low
+Roadside debris,industrial,102,Low
+Water leakage,highway,108,Low
+Illegal dumping,commercial,95,Low
+Illegal dumping,residential,12,High
+Noise complaint,residential,167,Low
+Water leakage,industrial,153,Low
+Noise complaint,public park,170,Low
+Roadside debris,public park,172,Low
+Fallen tree,public park,2,High
+Stray animals,residential,21,High
+Noise complaint,industrial,116,Low
+Blocked drain,industrial,76,Medium
+Blocked drain,residential,95,Low
+Streetlight not working,residential,102,Low
+Stray animals,commercial,110,Low
+Streetlight not working,industrial,144,Low
+Trash overflow,public park,70,Medium
+Blocked drain,highway,95,Low
+Trash overflow,residential,84,Medium
+Fallen tree,highway,95,Low
+Pothole on road,residential,127,Low
+Stray animals,commercial,117,Low
+Illegal dumping,residential,2,High
+Fallen tree,industrial,83,Medium
+Stray animals,industrial,52,Medium
+Broken traffic signal,commercial,153,Low
+Blocked drain,residential,32,Medium
+Weeds on sidewalk,industrial,19,High
+Weeds on sidewalk,highway,162,Low
+Weeds on sidewalk,highway,91,Low
+Trash overflow,commercial,25,High
+Trash overflow,commercial,78,Medium
+Trash overflow,commercial,97,Low
+Streetlight not working,public park,128,Low
+Sewer issue,residential,51,Medium
+Pothole on road,public park,116,Low
+Stray animals,highway,35,Medium
+Blocked drain,industrial,92,Low
+Trash overflow,highway,10,High
+Noise complaint,highway,147,Low
+Noise complaint,residential,81,Medium
+Illegal dumping,public park,157,Low
+Weeds on sidewalk,highway,96,Low
+Noise complaint,public park,38,Medium
+Weeds on sidewalk,residential,17,High
+Fallen tree,highway,77,Medium
+Broken traffic signal,residential,22,High
+Trash overflow,commercial,83,Medium
+Trash overflow,public park,51,Medium
+Noise complaint,industrial,121,Low
+Water leakage,industrial,81,Medium
+Fallen tree,residential,160,Low
+Streetlight not working,residential,9,High
+Roadside debris,residential,139,Low
+Sewer issue,industrial,5,High
+Stray animals,commercial,15,High
+Weeds on sidewalk,industrial,166,Low
+Illegal dumping,residential,70,Medium
+Roadside debris,commercial,38,Medium
+Roadside debris,highway,123,Low
+Trash overflow,highway,53,Medium
+Stray animals,public park,169,Low
+Pothole on road,public park,104,Low
+Weeds on sidewalk,industrial,120,Low
+Noise complaint,public park,180,Low
+Noise complaint,industrial,133,Low
+Illegal dumping,highway,166,Low
+Sewer issue,highway,77,Medium
+Broken traffic signal,public park,31,Medium
+Pothole on road,public park,158,Low
+Noise complaint,industrial,157,Low
+Roadside debris,public park,38,Medium
+Stray animals,public park,35,Medium
+Noise complaint,residential,12,High
+Broken traffic signal,public park,49,Medium
+Trash overflow,residential,125,Low
+Roadside debris,residential,57,Medium
+Water leakage,highway,154,Low
+Broken traffic signal,industrial,42,Medium
+Roadside debris,highway,14,High
+Stray animals,highway,148,Low
+Streetlight not working,commercial,80,Medium
+Sewer issue,commercial,144,Low
+Pothole on road,commercial,10,High
+Weeds on sidewalk,highway,49,Medium
+Noise complaint,industrial,87,Medium
+Illegal dumping,public park,143,Low
+Stray animals,highway,103,Low
+Stray animals,highway,65,Medium
+Broken traffic signal,public park,140,Low
+Fallen tree,residential,120,Low
+Fallen tree,highway,92,Low
+Sewer issue,residential,97,Low
+Fallen tree,commercial,62,Medium
+Noise complaint,commercial,167,Low
+Weeds on sidewalk,highway,29,High
+Fallen tree,highway,23,High
+Blocked drain,commercial,166,Low
+Water leakage,highway,127,Low
+Water leakage,commercial,167,Low
+Blocked drain,public park,132,Low
+Pothole on road,public park,27,High
+Water leakage,highway,116,Low
+Noise complaint,highway,47,Medium
+Broken traffic signal,industrial,41,Medium
+Noise complaint,commercial,144,Low
+Noise complaint,industrial,161,Low
+Blocked drain,highway,91,Low
+Trash overflow,industrial,68,Medium
+Water leakage,public park,177,Low
+Blocked drain,industrial,40,Medium
+Stray animals,highway,50,Medium
+Blocked drain,highway,77,Medium
+Weeds on sidewalk,highway,21,High
+Sewer issue,industrial,3,High
+Pothole on road,commercial,170,Low
+Broken traffic signal,commercial,112,Low
+Weeds on sidewalk,residential,6,High
+Broken traffic signal,residential,66,Medium
+Pothole on road,commercial,74,Medium
+Fallen tree,residential,89,Medium
+Broken traffic signal,industrial,58,Medium
+Streetlight not working,public park,119,Low
+Water leakage,commercial,167,Low
+Broken traffic signal,public park,96,Low
+Stray animals,public park,31,Medium
+Fallen tree,industrial,85,Medium
+Water leakage,industrial,175,Low
+Roadside debris,industrial,167,Low
+Sewer issue,public park,65,Medium
+Illegal dumping,residential,82,Medium
+Sewer issue,commercial,115,Low
+Stray animals,highway,97,Low
+Water leakage,public park,19,High
+Pothole on road,highway,35,Medium
+Trash overflow,public park,157,Low
+Sewer issue,highway,49,Medium
+Sewer issue,public park,8,High
+Water leakage,highway,37,Medium
+Streetlight not working,commercial,134,Low
+Sewer issue,public park,142,Low
+Roadside debris,industrial,152,Low
+Trash overflow,residential,148,Low
+Illegal dumping,highway,177,Low
+Fallen tree,industrial,45,Medium
+Fallen tree,highway,168,Low
+Pothole on road,highway,64,Medium
+Streetlight not working,public park,60,Medium
+Streetlight not working,public park,158,Low
+Blocked drain,public park,79,Medium
+Illegal dumping,public park,12,High
+Noise complaint,residential,39,Medium
+Stray animals,residential,126,Low
+Noise complaint,public park,121,Low
+Water leakage,residential,98,Low
+Blocked drain,public park,138,Low
+Trash overflow,industrial,40,Medium
+Sewer issue,residential,5,High
+Sewer issue,commercial,52,Medium
+Illegal dumping,commercial,177,Low
+Trash overflow,commercial,146,Low
+Noise complaint,industrial,38,Medium
+Broken traffic signal,industrial,112,Low
+Roadside debris,industrial,69,Medium
+Noise complaint,public park,111,Low
+Streetlight not working,public park,63,Medium
+Streetlight not working,highway,134,Low
+Water leakage,public park,131,Low
+Roadside debris,highway,154,Low
+Noise complaint,residential,64,Medium
+Roadside debris,industrial,165,Low
+Roadside debris,commercial,108,Low
+Blocked drain,commercial,173,Low
+Stray animals,public park,6,High
+Weeds on sidewalk,residential,119,Low
+Stray animals,commercial,75,Medium
+Trash overflow,commercial,45,Medium
+Sewer issue,commercial,120,Low
+Water leakage,public park,77,Medium
+Streetlight not working,highway,40,Medium
+Noise complaint,public park,89,Medium
+Stray animals,industrial,61,Medium
+Pothole on road,public park,145,Low
+Roadside debris,industrial,91,Low
+Water leakage,residential,55,Medium
+Pothole on road,public park,142,Low
+Sewer issue,highway,13,High
+Fallen tree,commercial,47,Medium
+Pothole on road,highway,116,Low
+Stray animals,highway,65,Medium
+Broken traffic signal,industrial,92,Low
+Trash overflow,commercial,119,Low
+Fallen tree,residential,9,High
+Sewer issue,highway,163,Low
+Weeds on sidewalk,public park,125,Low
+Blocked drain,residential,162,Low
+Pothole on road,public park,150,Low
+Noise complaint,residential,49,Medium
+Roadside debris,residential,147,Low
+Roadside debris,residential,119,Low
+Water leakage,residential,96,Low
+Weeds on sidewalk,residential,127,Low
+Noise complaint,commercial,77,Medium
+Stray animals,highway,146,Low
+Trash overflow,public park,117,Low
+Roadside debris,highway,146,Low
+Sewer issue,highway,87,Medium
+Water leakage,commercial,148,Low
+Broken traffic signal,public park,30,High
+Sewer issue,highway,5,High
+Noise complaint,public park,89,Medium
+Broken traffic signal,industrial,1,High
+Roadside debris,highway,76,Medium
+Streetlight not working,commercial,118,Low
+Sewer issue,highway,75,Medium
+Illegal dumping,highway,153,Low
+Roadside debris,highway,116,Low
+Sewer issue,industrial,176,Low
+Stray animals,residential,113,Low
+Stray animals,public park,77,Medium
+Broken traffic signal,highway,4,High
+Stray animals,industrial,152,Low
+Trash overflow,residential,56,Medium
+Noise complaint,industrial,50,Medium
+Broken traffic signal,industrial,101,Low
+Illegal dumping,public park,149,Low
+Sewer issue,residential,136,Low
+Stray animals,industrial,67,Medium
+Streetlight not working,commercial,63,Medium
+Noise complaint,commercial,62,Medium
+Streetlight not working,highway,22,High
+Water leakage,public park,45,Medium
+Sewer issue,highway,52,Medium
+Water leakage,residential,80,Medium
+Pothole on road,highway,91,Low
+Blocked drain,public park,158,Low
+Fallen tree,commercial,176,Low
+Water leakage,highway,103,Low
+Blocked drain,industrial,92,Low
+Sewer issue,highway,26,High
+Sewer issue,highway,133,Low
+Stray animals,industrial,112,Low
+Weeds on sidewalk,residential,143,Low
+Trash overflow,residential,75,Medium
+Broken traffic signal,public park,41,Medium
+Water leakage,highway,58,Medium
+Sewer issue,commercial,174,Low
+Water leakage,commercial,173,Low
+Blocked drain,highway,96,Low
+Stray animals,commercial,102,Low
+Noise complaint,industrial,22,High
+Pothole on road,commercial,135,Low
+Noise complaint,commercial,102,Low
+Trash overflow,industrial,98,Low
+Pothole on road,commercial,115,Low
+Weeds on sidewalk,residential,150,Low
+Blocked drain,public park,18,High
+Roadside debris,residential,122,Low
+Trash overflow,residential,158,Low
+Pothole on road,industrial,146,Low
+Blocked drain,highway,18,High
+Water leakage,industrial,95,Low
+Trash overflow,residential,88,Medium
+Streetlight not working,industrial,47,High
+Pothole on road,commercial
