@@ -1,0 +1,235 @@
+!======== Router 1 ==========
+
+enable
+conf t
+
+hostname R1
+
+int g0/0
+ip address 126.26.0.1 255.255.255.0
+no shutdown
+exit
+
+int g0/1
+ip address 120.26.5.1 255.255.255.0
+no shutdown
+exit
+
+router ospf 10
+network 126.20.1.0 0.0.0.255 area 0
+network 120.20.6.0 0.0.0.255 area 0
+
+end
+wr
+
+/
+router ospf 10
+network 126.26.0.0 0.0.0.255 area 0
+network 120.20.5.0 0.0.0.255 area 0
+
+end
+wr
+
+/
+!=========== Router 2 ===========
+enable
+conf t
+
+hostname R2
+
+int g0/0
+ip address 120.20.2.1 255.255.255.0
+no shutdown
+exit
+
+int g0/1
+ip address 120.20.6.2 255.255.255.0
+no shutdown
+exit
+
+int g0/2
+ip address 120.20.7.1 255.255.255.0
+no shutdown
+exit
+
+router ospf 10
+router-id 2.2.2.2
+network 120.20.2.0 0.0.0.255 area 0
+network 120.20.6.0 0.0.0.255 area 0
+network 120.20.7.0 0.0.0.255 area 0
+
+end
+wr
+
+/
+router ospf 10
+router-id 2.2.2.2
+network 126.26.1.0 0.0.0.255 area 0
+network 126.26.5.0 0.0.0.255 area 0
+network 126.26.6.0 0.0.0.255 area 0
+
+end
+wr
+
+/
+
+! =========== Router 3 ============
+enable
+conf t
+
+hostname R3
+
+int g0/0
+ip address 120.20.3.1 255.255.255.0
+no shutdown
+exit
+
+int g0/1
+ip address 120.20.7.2 255.255.255.0
+no shutdown
+exit
+
+int g0/2
+ip address 120.20.8.1 255.255.255.0
+no shutdown
+exit
+
+router ospf 10
+
+network 120.20.3.0 0.0.0.255 area 0
+network 120.20.7.0 0.0.0.255 area 0
+network 120.20.8.0 0.0.0.255 area 0
+
+end
+wr
+/
+router ospf 10
+
+network 126.26.2.0 0.0.0.255 area 0
+network 126.26.6.0 0.0.0.255 area 0
+network 126.26.7.0 0.0.0.255 area 0
+
+end
+wr
+
+/
+
+
+! =========== Router 4 ============
+
+
+enable
+conf t
+
+hostname R4
+
+int g0/0
+ip address 120.20.8.2 255.255.255.0
+no shutdown
+exit
+
+int g0/1
+ip address 120.20.9.1 255.255.255.0
+no shutdown
+exit
+
+router ospf 10
+router-id 4.4.4.4
+
+network 120.20.8.0 0.0.0.255 area 0   
+network 120.20.9.0 0.0.0.255 area 1   
+
+end
+wr
+/
+router ospf 10
+router-id 4.4.4.4
+
+network 126.26.7.0 0.0.0.255 area 0   
+network 126.26.8.0 0.0.0.255 area 1   
+
+end
+wr
+
+/
+
+
+! =========== Router 5 ============
+
+
+
+
+enable
+conf t
+
+hostname R5
+
+int g0/0
+ip address 120.20.4.1 255.255.255.0
+no shutdown
+exit
+
+int g0/1
+ip address 120.20.9.2 255.255.255.0
+no shutdown
+exit
+
+int g0/2
+ip address 120.20.10.1 255.255.255.0
+no shutdown
+exit
+
+router ospf 10
+
+network 120.20.4.0 0.0.0.255 area 1
+network 120.20.9.0 0.0.0.255 area 1
+network 120.20.10.0 0.0.0.255 area 1
+
+end
+wr
+
+/
+router ospf 10
+
+network 126.26.3.0 0.0.0.255 area 1
+network 126.26.8.0 0.0.0.255 area 1
+network 126.26.9.0 0.0.0.255 area 1
+
+end
+wr
+
+/
+
+! =========== Router 6 ============
+
+
+enable
+conf t
+
+hostname R6a
+
+int g0/0
+ip address 120.20.5.1 255.255.255.0
+no shutdown
+exit
+
+int g0/1
+ip address 120.20.10.2 255.255.255.0
+no shutdown
+exit
+
+router ospf 10
+network 120.20.5.0 0.0.0.255 area 1
+network 120.20.10.0 0.0.0.255 area 1
+
+end
+wr
+
+/
+router ospf 10
+network 126.26.4.0 0.0.0.255 area 1
+network 126.26.9.0 0.0.0.255 area 1
+
+end
+wr
+/
