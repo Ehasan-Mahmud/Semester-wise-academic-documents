@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThesisSync Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16213E; --ink-soft:#2C3A5E; --ink-2:#1E2C4F;
+  --paper:#F3F5EE; --panel:#FFFFFF;
+  --amber:#E5A339; --amber-deep:#C6821E; --amber-tint:#FBEFDA;
+  --teal:#3E8079; --teal-tint:#E3EFEC;
+  --red:#C24D3B; --red-tint:#F7E7E3;
+  --muted:#667085; --line:#DCE0D3; --line-dark:#3A4770;
+  --radius:10px;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;margin:0;letter-spacing:-0.01em;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+button{font-family:'Inter',sans-serif;cursor:pointer;}
+input,select,textarea{font-family:'Inter',sans-serif;}
+::selection{background:var(--amber-tint);}
+
+/* ---------- LOGIN ---------- */
+#view-login{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+@media(max-width:860px){#view-login{grid-template-columns:1fr;}}
+.login-brand{background:var(--ink);color:var(--paper);padding:56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.login-brand .logo{display:flex;align-items:center;gap:9px;font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;}
+.login-brand .logo .dot{width:11px;height:11px;background:var(--amber);border-radius:3px;}
+.login-brand h1{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.15;max-width:15ch;margin-top:auto;}
+.login-brand p{color:#B7BEDA;font-size:0.92rem;margin-top:16px;max-width:38ch;line-height:1.6;}
+.login-weekgrid{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;margin-top:28px;max-width:340px;}
+.login-weekgrid i{display:block;aspect-ratio:1;border-radius:2px;background:var(--line-dark);}
+.login-weekgrid i.on{background:var(--amber);}
+
+.login-form-wrap{display:flex;align-items:center;justify-content:center;padding:40px;}
+.login-form{width:100%;max-width:380px;}
+.login-form .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.login-form h2{font-size:1.5rem;margin-bottom:6px;}
+.login-form>p.sub{color:var(--muted);font-size:0.9rem;margin-bottom:20px;}
+.auth-tabs{display:flex;gap:4px;background:#EAECE2;border-radius:9px;padding:4px;margin-bottom:24px;}
+.auth-tab{flex:1;text-align:center;padding:9px 0;border-radius:6px;border:none;background:none;font-size:0.85rem;font-weight:600;color:var(--muted);}
+.auth-tab.active{background:var(--panel);color:var(--ink);box-shadow:0 1px 3px rgba(22,33,62,0.12);}
+.role-select{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
+.role-btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:11px 4px;text-align:center;font-size:0.74rem;font-weight:500;color:var(--muted);transition:.15s;}
+.role-btn.active{border-color:var(--ink);color:var(--ink);background:var(--amber-tint);}
+.field{margin-bottom:15px;}
+.field label{display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;font-weight:500;}
+.field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;font-size:0.9rem;background:var(--panel);color:var(--ink);}
+.field input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:1px;}
+.btn{font-weight:600;font-size:0.9rem;padding:12px 20px;border-radius:8px;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.15s;}
+.btn-primary{background:var(--ink);color:var(--paper);width:100%;}
+.btn-primary:hover{box-shadow:0 6px 16px rgba(22,33,62,0.25);}
+.hint{font-size:0.76rem;color:var(--muted);margin-top:14px;text-align:center;}
+.err{font-size:0.78rem;color:var(--red);margin:-8px 0 14px;display:none;}
+.err.show{display:block;}
+
+/* ---------- APP SHELL ---------- */
+#view-app{display:none;min-height:100vh;grid-template-columns:236px 1fr;}
+#view-app.active{display:grid;}
+.sidebar{background:var(--ink);color:#C7CDE0;padding:22px 16px;display:flex;flex-direction:column;position:relative;}
+.sidebar .logo{display:flex;align-items:center;gap:9px;color:var(--paper);font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;padding:6px 8px 16px;}
+.sidebar .logo .dot{width:10px;height:10px;background:var(--amber);border-radius:3px;}
+
+.proj-switch{position:relative;margin-bottom:18px;}
+.proj-switch-btn{
+  width:100%;text-align:left;background:var(--ink-2);border:1px solid var(--line-dark);border-radius:9px;
+  padding:10px 12px;color:#fff;display:flex;align-items:center;justify-content:space-between;font-size:0.82rem;
+}
+.proj-switch-btn .pname{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.proj-switch-btn .car{color:#8890B3;flex-shrink:0;margin-left:6px;}
+.proj-dropdown{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--panel);border:1px solid var(--line);
+  border-radius:9px;box-shadow:0 20px 40px -12px rgba(22,33,62,0.35);z-index:60;overflow:hidden;display:none;
+}
+.proj-dropdown.open{display:block;}
+.proj-opt{padding:11px 13px;font-size:0.83rem;color:var(--ink);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+.proj-opt:hover{background:var(--paper);}
+.proj-opt.current{background:var(--amber-tint);font-weight:600;}
+.proj-new{padding:11px 13px;font-size:0.83rem;color:var(--teal);font-weight:600;}
+.proj-new:hover{background:var(--paper);}
+
+.navlist{display:flex;flex-direction:column;gap:2px;flex:1;}
+.navitem{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:7px;font-size:0.88rem;color:#AEB5D2;background:none;border:none;text-align:left;width:100%;}
+.navitem .ic{width:16px;text-align:center;font-size:0.9rem;}
+.navitem:hover{background:var(--ink-2);color:#fff;}
+.navitem.active{background:var(--amber-tint);color:var(--ink);font-weight:600;}
+.navitem .badge{margin-left:auto;background:var(--amber);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:0.65rem;padding:1px 6px;border-radius:10px;}
+.sidebar-user{border-top:1px solid var(--line-dark);padding-top:14px;margin-top:10px;display:flex;align-items:center;gap:10px;}
+.av{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;font-weight:500;}
+.sidebar-user .info b{display:block;font-size:0.84rem;color:#fff;}
+.sidebar-user .info span{font-size:0.72rem;color:#8890B3;}
+.sidebar-user button{background:none;border:none;color:#8890B3;margin-left:auto;font-size:0.75rem;}
+.sidebar-user button:hover{color:var(--amber);}
+
+.main{display:flex;flex-direction:column;min-height:100vh;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:20;}
+.topbar h2{font-size:1.25rem;}
+.topbar .right{display:flex;align-items:center;gap:14px;}
+.icon-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--panel);display:flex;align-items:center;justify-content:center;position:relative;font-size:0.95rem;color:var(--ink-soft);}
+.icon-btn:hover{border-color:var(--ink);}
+.dot-badge{position:absolute;top:-3px;right:-3px;width:9px;height:9px;background:var(--red);border-radius:50%;border:2px solid var(--panel);}
+.notif-panel{position:absolute;top:60px;right:28px;width:320px;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 20px 40px -12px rgba(22,33,62,0.25);z-index:30;display:none;overflow:hidden;}
+.notif-panel.open{display:block;}
+.notif-panel .nh{padding:14px 16px;border-bottom:1px solid var(--line);font-weight:600;font-size:0.88rem;}
+.notif-item{padding:12px 16px;border-bottom:1px solid var(--line);font-size:0.82rem;display:flex;gap:10px;}
+.notif-item:last-child{border-bottom:none;}
+.notif-item .nb{width:7px;height:7px;border-radius:50%;background:var(--teal);margin-top:6px;flex-shrink:0;}
+.notif-item .txt b{display:block;color:var(--ink);font-weight:500;}
+.notif-item .txt span{color:var(--muted);font-size:0.74rem;}
+
+.content{padding:28px;flex:1;}
+.view{display:none;}
+.view.active{display:block;}
+
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.section-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.btn-outline{border:1px solid var(--line-dark);color:var(--ink);background:var(--panel);}
+.btn-outline:hover{border-color:var(--ink);}
+.btn-sm{padding:9px 15px;font-size:0.82rem;}
+.btn-tiny{padding:5px 9px;font-size:0.72rem;border-radius:6px;}
+.icon-mini{background:none;border:1px solid var(--line);border-radius:6px;width:26px;height:26px;font-size:0.78rem;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;}
+.icon-mini:hover{border-color:var(--ink);color:var(--ink);}
+.icon-mini.danger:hover{border-color:var(--red);color:var(--red);}
+
+/* onboarding empty state */
+.empty-state{text-align:center;padding:80px 20px;max-width:440px;margin:0 auto;}
+.empty-state .glyph{font-size:2.2rem;margin-bottom:18px;}
+.empty-state h2{font-size:1.5rem;margin-bottom:10px;}
+.empty-state p{color:var(--muted);font-size:0.92rem;line-height:1.6;margin-bottom:26px;}
+
+/* dashboard */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:28px;}
+@media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-cell{background:var(--panel);padding:20px;}
+.stat-cell .k{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);text-transform:uppercase;}
+.stat-cell .v{font-family:'Fraunces',serif;font-size:1.6rem;margin-top:6px;}
+.progress-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:24px;}
+.progress-bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:12px;}
+.progress-bar i{display:block;height:100%;background:var(--teal);}
+.dash-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;}
+@media(max-width:900px){.dash-cols{grid-template-columns:1fr;}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;}
+.panel h3{font-size:1rem;margin-bottom:14px;}
+.activity-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:0.85rem;}
+.activity-row:last-child{border-bottom:none;}
+.activity-row .av{width:26px;height:26px;font-size:0.65rem;}
+.meeting-row{padding:12px 0;border-bottom:1px solid var(--line);}
+.meeting-row:last-child{border-bottom:none;}
+.meeting-row .d{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--teal);}
+.meeting-row .t{font-size:0.88rem;font-weight:500;margin-top:3px;}
+
+/* milestones */
+.milestone-row{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;}
+.milestone-row .m-info{flex:1;}
+.milestone-row .m-info b{font-size:0.94rem;}
+.milestone-row .m-info .meta{font-size:0.76rem;color:var(--muted);margin-top:3px;font-family:'IBM Plex Mono',monospace;}
+.status-pill{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;padding:4px 10px;border-radius:20px;white-space:nowrap;}
+.status-pill.planned{background:#EDEFE6;color:var(--muted);}
+.status-pill.inprogress{background:var(--teal-tint);color:var(--teal);}
+.status-pill.complete{background:var(--amber-tint);color:var(--amber-deep);}
+.status-pill.approved{background:#DEEFE0;color:#2E7D46;}
+
+/* kanban */
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start;}
+@media(max-width:1000px){.kanban{grid-template-columns:repeat(2,1fr);}}
+.kcol{background:#EDEFE6;border-radius:var(--radius);padding:14px;min-height:120px;}
+.kcol.dragover{outline:2px dashed var(--teal);outline-offset:-2px;}
+.kcol h4{font-size:0.8rem;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;justify-content:space-between;}
+.kcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px;cursor:grab;font-size:0.85rem;position:relative;}
+.kcard:active{cursor:grabbing;}
+.kcard .tag{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--teal);display:block;margin-bottom:6px;}
+.kcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+.kcard .foot .wk{font-size:0.7rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.kcard .kactions{position:absolute;top:8px;right:8px;display:flex;gap:4px;}
+
+/* journal */
+.journal-entry{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);}
+.journal-entry:last-child{border-bottom:none;}
+.journal-entry .wkmark{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--paper);background:var(--ink);border-radius:6px;padding:5px 9px;height:fit-content;flex-shrink:0;}
+.journal-entry .body{flex:1;}
+.journal-entry .body b{font-size:0.9rem;display:block;margin-bottom:4px;}
+.journal-entry .body p{margin:0;font-size:0.87rem;color:var(--ink-soft);line-height:1.55;}
+.journal-entry .body span.meta{font-size:0.72rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.journal-entry .jactions{display:flex;gap:4px;flex-shrink:0;}
+
+/* files */
+table{width:100%;border-collapse:collapse;font-size:0.86rem;}
+th{text-align:left;padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:0.68rem;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);}
+td{padding:12px;border-bottom:1px solid var(--line);}
+tr:last-child td{border-bottom:none;}
+.pill{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;padding:3px 9px;border-radius:20px;background:var(--teal-tint);color:var(--teal);}
+
+/* meetings */
+.meeting-card{display:flex;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;}
+.meeting-date{width:52px;text-align:center;background:var(--amber-tint);border-radius:8px;padding:8px 4px;flex-shrink:0;}
+.meeting-date .d1{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--amber-deep);}
+.meeting-date .d2{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;color:var(--ink);}
+.meeting-card .info{flex:1;}
+.meeting-card .info b{font-size:0.92rem;}
+.meeting-card .info .meta{font-size:0.78rem;color:var(--muted);margin-top:3px;}
+.avatars-row{display:flex;}
+.avatars-row .av{margin-left:-8px;border:2px solid var(--panel);}
+.avatars-row .av:first-child{margin-left:0;}
+.meeting-card .mactions{display:flex;gap:4px;}
+
+/* feedback */
+.thread{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:16px;}
+.thread .thead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;}
+.thread .thead b{font-size:0.92rem;}
+.thead-right{display:flex;gap:8px;align-items:center;}
+.comment{display:flex;gap:10px;margin-bottom:12px;}
+.comment .body{background:#F7F8F3;border-radius:8px;padding:10px 12px;flex:1;}
+.comment .body b{font-size:0.82rem;}
+.comment .body .role{font-size:0.68rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-left:6px;}
+.comment .body p{margin:4px 0 0;font-size:0.84rem;color:var(--ink-soft);}
+.reply-row{display:flex;gap:8px;margin-top:6px;}
+.reply-row input{flex:1;padding:9px 12px;border:1px solid var(--line);border-radius:8px;font-size:0.84rem;}
+.verdict-actions{display:flex;gap:6px;}
+
+/* team */
+.role-badge{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;padding:3px 9px;border-radius:20px;}
+.role-badge.student{background:var(--teal-tint);color:var(--teal);}
+.role-badge.supervisor,.role-badge.cosupervisor{background:var(--amber-tint);color:var(--amber-deep);}
+.status-tag{font-size:0.72rem;color:var(--muted);}
+.status-tag.invited{color:var(--amber-deep);}
+.status-tag.joined{color:#2E7D46;}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(22,33,62,0.4);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
+.overlay.open{display:flex;}
+.modal{background:var(--panel);border-radius:12px;width:100%;max-width:460px;padding:26px;max-height:88vh;overflow-y:auto;}
+.modal h3{font-size:1.1rem;margin-bottom:4px;}
+.modal p.msub{color:var(--muted);font-size:0.82rem;margin-bottom:18px;}
+.modal .field label{font-size:0.78rem;color:var(--muted);margin-bottom:6px;display:block;font-weight:500;}
+.modal .field select, .modal .field textarea, .modal .field input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:0.87rem;background:var(--panel);color:var(--ink);}
+.modal .field textarea{resize:vertical;min-height:60px;}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
+.modal-actions .btn{flex:1;}
+.mrow{display:flex;gap:8px;align-items:flex-end;margin-bottom:8px;}
+.mrow .field{flex:1;margin-bottom:0;}
+.mrow .field.wk{max-width:110px;}
+.add-row-btn{font-size:0.8rem;color:var(--teal);background:none;border:none;font-weight:600;padding:6px 0;}
+
+.empty{color:var(--muted);font-size:0.86rem;padding:30px 0;text-align:center;}
+@media(max-width:760px){
+  #view-app{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN / SIGNUP ============ -->
+<div id="view-login">
+  <div class="login-brand">
+    <div class="logo"><span class="dot"></span>ThesisSync</div>
+    <div>
+      <h1>One workspace for every role on the team.</h1>
+      <p>Students plan and build. Supervisors and co-supervisors review and sign off. Everyone works from the same milestones.</p>
+      <div class="login-weekgrid" id="loginGrid" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="login-form-wrap">
+    <div class="login-form">
+      <div class="eyebrow">ThesisSync</div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabSignin" onclick="setAuthTab('signin')">Sign in</button>
+        <button class="auth-tab" id="tabSignup" onclick="setAuthTab('signup')">Create account</button>
+      </div>
+
+      <!-- SIGN IN -->
+      <div id="panelSignin">
+        <h2>Welcome back</h2>
+        <p class="sub">Sign in with your ThesisSync account.</p>
+        <div class="field"><label>Email</label><input id="loginEmail" type="text" placeholder="meherabhossen4@gmail.com" value="meherabhossen4@gmail.com"></div>
+        <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="••••••••" value="demo1234"></div>
+        <div class="err" id="signinErr">No account found with that email and password.</div>
+        <button class="btn btn-primary" onclick="login()">Sign in</button>
+        <p class="hint">Demo accounts: meherabhossen4@gmail.com · ehasan@gmail.com · supervisor@gmail.com | password <b>demo1234</b></p>
+      </div>
+
+      <!-- SIGN UP -->
+      <div id="panelSignup" style="display:none;">
+        <h2>Create your account</h2>
+        <p class="sub">Choose the role you'll hold on your thesis team.</p>
+        <div class="role-select" id="signupRoleSelect">
+          <button class="role-btn active" data-role="student">Student</button>
+          <button class="role-btn" data-role="supervisor">Supervisor</button>
+          <button class="role-btn" data-role="cosupervisor">Co-supervisor</button>
+        </div>
+        <div class="field"><label>Full name</label><input id="suName" type="text" placeholder="e.g. Meherab Hossen Opi"></div>
+        <div class="field"><label>Email</label><input id="suEmail" type="text" placeholder="meherabhossen4@gmail.com"></div>
+        <div class="field" id="suIdField"><label id="suIdLabel">Student ID</label><input id="suId" type="text" placeholder="e.g. 202122104028"></div>
+        <div class="field"><label>Password</label><input id="suPass" type="password" placeholder="Create a password"></div>
+        <div class="err" id="signupErr">An account with that email already exists.</div>
+        <button class="btn btn-primary" onclick="signup()">Create account</button>
+        <p class="hint">This creates a demo account, stored only for this session.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="view-app">
+  <aside class="sidebar">
+    <div class="logo"><span class="dot"></span>ThesisSync</div>
+
+    <div class="proj-switch">
+      <button class="proj-switch-btn" onclick="toggleProjSwitch()">
+        <span class="pname" id="projSwitchLabel">No thesis yet</span>
+        <span class="car">▾</span>
+      </button>
+      <div class="proj-dropdown" id="projDropdown"></div>
+    </div>
+
+    <div class="navlist" id="navlist">
+      <button class="navitem active" data-view="dashboard"><span class="ic">◧</span>Dashboard</button>
+      <button class="navitem" data-view="milestones"><span class="ic">◈</span>Milestones</button>
+      <button class="navitem" data-view="tasks"><span class="ic">▤</span>Tasks</button>
+      <button class="navitem" data-view="journal"><span class="ic">✎</span>Progress Journal</button>
+      <button class="navitem" data-view="files"><span class="ic">▢</span>File Repository</button>
+      <button class="navitem" data-view="meetings"><span class="ic">◷</span>Meetings</button>
+      <button class="navitem" data-view="feedback"><span class="ic">◐</span>Feedback</button>
+      <button class="navitem" data-view="team"><span class="ic">◎</span>Team & Roles</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="av" id="sideAv" style="background:var(--teal);">MO</div>
+      <div class="info"><b id="sideName">Meherab Hossen Opi</b><span id="sideRole">Student</span></div>
+      <button onclick="logout()">Sign out</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <h2 id="topTitle">Dashboard</h2>
+      <div class="right">
+        <button class="icon-btn" onclick="toggleNotif()">🔔<span class="dot-badge"></span></button>
+        <button class="btn btn-primary btn-sm" id="quickAddBtn" onclick="quickAdd()">+ New</button>
+        <button class="icon-btn" onclick="logout()" title="Sign out" aria-label="Sign out">⏻</button>
+      </div>
+      <div class="notif-panel" id="notifPanel">
+        <div class="nh">Notifications</div>
+        <div class="notif-item"><div class="nb"></div><div class="txt"><b>Supervisor commented on System Design</b><span>2 hours ago</span></div></div>
+        <div class="notif-item"><div class="nb"></div><div class="txt"><b>Meeting scheduled: Sprint review</b><span>Yesterday</span></div></div>
+        <div class="notif-item"><div class="nb"></div><div class="txt"><b>Milestone "SRS" marked complete</b><span>3 days ago</span></div></div>
+        <div class="notif-item"><div class="nb"></div><div class="txt"><b>New file uploaded: ERD_v2.pdf</b><span>4 days ago</span></div></div>
+      </div>
+    </div>
+
+    <div class="content" id="mainContent">
+
+      <!-- ONBOARDING (no thesis yet) -->
+      <div class="view" id="v-onboarding">
+        <div class="empty-state">
+          <div class="glyph">◈</div>
+          <h2>Create your first thesis</h2>
+          <p>Set the title, plan out milestones week by week, and invite your supervisor and co-supervisor by email. You can edit all of it later.</p>
+          <button class="btn btn-primary" onclick="openThesisModal()" style="width:auto;padding:12px 26px;">+ Create a thesis</button>
+        </div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div class="view" id="v-dashboard">
+        <div class="stat-grid">
+          <div class="stat-cell"><div class="k">Tasks due this week</div><div class="v" id="statTasks">3</div></div>
+          <div class="stat-cell"><div class="k">Milestones complete</div><div class="v" id="statMilestones">2 / 8</div></div>
+          <div class="stat-cell"><div class="k">Open feedback threads</div><div class="v" id="statFeedback">3</div></div>
+          <div class="stat-cell"><div class="k">Next meeting</div><div class="v" id="statMeeting"> </div></div>
+        </div>
+        <div class="progress-card">
+          <div class="section-top" style="margin-bottom:0;">
+            <div><div class="eyebrow">Overall progress</div><h3 style="font-size:1.1rem;" id="progressTitle"> </h3></div>
+            <div class="mono" style="font-size:1.3rem;color:var(--teal);" id="progressPct">0%</div>
+          </div>
+          <div class="progress-bar"><i id="progressBarFill" style="width:0%;"></i></div>
+        </div>
+        <div class="dash-cols">
+          <div class="panel"><h3>Recent activity</h3><div id="activityFeed"></div></div>
+          <div class="panel"><h3>Upcoming meetings</h3><div id="upcomingMeetings"></div></div>
+        </div>
+      </div>
+
+      <!-- MILESTONES -->
+      <div class="view" id="v-milestones">
+        <div class="section-top">
+          <div><div class="eyebrow">Planning</div><h2 style="font-size:1.4rem;">Milestones</h2></div>
+          <button class="btn btn-primary btn-sm" onclick="openMilestoneModal()">+ Add milestone</button>
+        </div>
+        <div id="milestonesList"></div>
+      </div>
+
+      <!-- TASKS -->
+      <div class="view" id="v-tasks">
+        <div class="section-top">
+          <div><div class="eyebrow">Tasks</div><h2 style="font-size:1.4rem;">Kanban board</h2></div>
+          <button class="btn btn-primary btn-sm" onclick="openTaskModal()">+ Add task</button>
+        </div>
+        <div class="kanban" id="kanbanBoard"></div>
+      </div>
+
+      <!-- JOURNAL -->
+      <div class="view" id="v-journal">
+        <div class="section-top">
+          <div><div class="eyebrow">Progress journal</div><h2 style="font-size:1.4rem;">Weekly log</h2></div>
+          <button class="btn btn-primary btn-sm" onclick="openJournalModal()">+ New entry</button>
+        </div>
+        <div class="panel" id="journalList"></div>
+      </div>
+
+      <!-- FILES -->
+      <div class="view" id="v-files">
+        <div class="section-top">
+          <div><div class="eyebrow">File repository</div><h2 style="font-size:1.4rem;">Documents & versions</h2></div>
+          <button class="btn btn-primary btn-sm" onclick="openFileModal()">+ Upload file</button>
+        </div>
+        <div class="panel" style="padding:0;">
+          <table><thead><tr><th>File</th><th>Milestone</th><th>Version</th><th>Uploaded by</th><th>Date</th><th></th></tr></thead>
+          <tbody id="filesTable"></tbody></table>
+        </div>
+      </div>
+
+      <!-- MEETINGS -->
+      <div class="view" id="v-meetings">
+        <div class="section-top">
+          <div><div class="eyebrow">Meetings</div><h2 style="font-size:1.4rem;">Schedule</h2></div>
+          <button class="btn btn-primary btn-sm" onclick="openMeetingModal()">+ Schedule meeting</button>
+        </div>
+        <div id="meetingsList"></div>
+      </div>
+
+      <!-- FEEDBACK -->
+      <div class="view" id="v-feedback">
+        <div class="section-top">
+          <div><div class="eyebrow">Feedback</div><h2 style="font-size:1.4rem;">Review threads</h2></div>
+          <button class="btn btn-primary btn-sm" onclick="openThreadModal()">+ New thread</button>
+        </div>
+        <div id="threadsList"></div>
+      </div>
+
+      <!-- TEAM -->
+      <div class="view" id="v-team">
+        <div class="section-top">
+          <div><div class="eyebrow">Team & roles</div><h2 style="font-size:1.4rem;">Workspace members</h2></div>
+          <button class="btn btn-primary btn-sm" onclick="openInviteModal()">+ Invite member</button>
+        </div>
+        <div class="panel" style="padding:0;">
+          <table><thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Status</th><th></th></tr></thead>
+          <tbody id="teamTable"></tbody></table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="overlay" id="overlay"><div class="modal" id="modalBody"></div></div>
+
+<script>
+/* ================= ACCOUNTS ================= */
+const AVATARS = {"EM":"#3E8079","MO":"#E5A339","SZ":"#16213E"};
+const ROLE_LABELS = {student:"Student", supervisor:"Supervisor", cosupervisor:"Co-supervisor"};
+
+function initials(name){
+  return name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+function colorFor(email){
+  const palette = ["#3E8079","#E5A339","#16213E","#C24D3B","#6D5DAE","#2E7D46"];
+  let h=0; for(const c of email) h = (h*31 + c.charCodeAt(0))%palette.length;
+  return palette[h];
+}
+
+let accounts = [
+  {name:"Md. Ehasan Mahmud", email:"ehasan@gmail.com", password:"demo1234", role:"student", idOrTitle:"202122104026"},
+  {name:"Meherab Hossen Opi", email:"meherabhossen4@gmail.com", password:"demo1234", role:"student", idOrTitle:"202122104028"},
+  {name:"Md. Sabab Zulfiker", email:"supervisor@gmail.com", password:"demo1234", role:"supervisor", idOrTitle:"Lecturer, Dept. of CSE"},
+];
+
+let currentUser = null;
+let currentProjectId = null;
+let taskIdCounter = 100;
+let milestoneIdCounter = 100;
+
+/* ================= PROJECTS (seed one demo project) ================= */
+let projects = [
+  {
+    id: 1,
+    title: "ThesisSync — CSE4106",
+    description: "A web-based thesis collaboration platform for students, supervisors, and co-supervisors.",
+    milestones: [
+      {id:1, name:"Requirement Analysis", week:"W1–W2", status:"complete"},
+      {id:2, name:"System Design", week:"W3–W4", status:"inprogress"},
+      {id:3, name:"Frontend Development", week:"W5–W8", status:"planned"},
+      {id:4, name:"Backend Development", week:"W5–W10", status:"planned"},
+      {id:5, name:"Integration", week:"W11–W12", status:"planned"},
+      {id:6, name:"Testing", week:"W13–W14", status:"planned"},
+      {id:7, name:"Documentation", week:"W13–W15", status:"planned"},
+      {id:8, name:"Deployment & Demo", week:"W16", status:"planned"},
+    ],
+    tasks: [
+      {id:1, title:"Draft SRS document", tag:"Requirement Analysis", assignee:"EM", week:"W1–W2", col:"done"},
+      {id:2, title:"Stakeholder interview notes", tag:"Requirement Analysis", assignee:"MO", week:"W1", col:"done"},
+      {id:3, title:"Design ERD", tag:"System Design", assignee:"MO", week:"W3–W4", col:"inprogress"},
+      {id:4, title:"UI wireframes dashboard", tag:"System Design", assignee:"EM", week:"W4", col:"inprogress"},
+      {id:5, title:"Auth module (JWT)", tag:"Backend Development", assignee:"EM", week:"W5–W6", col:"todo"},
+      {id:6, title:"Task board frontend", tag:"Frontend Development", assignee:"MO", week:"W5–W6", col:"todo"},
+      {id:7, title:"Review dashboard mock", tag:"System Design", assignee:"SZ", week:"W4", col:"review"},
+    ],
+    journal: [
+      {week:"W6", author:"Meherab Hossen Opi", text:"Started ERD for milestone tracking + file repository schema. Blocked on deciding file versioning approach."},
+      {week:"W5", author:"Md. Ehasan Mahmud", text:"Finished stakeholder interviews with both supervisors. Consolidated functional requirements into SRS draft."},
+      {week:"W4", author:"Meherab Hossen Opi", text:"Wireframed dashboard and kanban views. Shared with team for feedback."},
+    ],
+    files: [
+      {name:"SRS_ThesisSync_v1.docx", milestone:"Requirement Analysis", version:"v1.2", by:"Md. Ehasan Mahmud", date:"12 Jun"},
+      {name:"ERD_ThesisSync.pdf", milestone:"System Design", version:"v2", by:"Meherab Hossen Opi", date:"18 Jun"},
+      {name:"Wireframes_Dashboard.fig", milestone:"System Design", version:"v3", by:"Meherab Hossen Opi", date:"20 Jun"},
+    ],
+    meetings: [
+      {d1:"FRI", d2:"20", month:"Jun", title:"Sprint review System Design", time:"3:00 PM", attendees:["EM","MO","SZ"], status:"upcoming"},
+      {d1:"MON", d2:"09", month:"Jun", title:"Kickoff & requirement walkthrough", time:"11:00 AM", attendees:["EM","MO","SZ"], status:"done"},
+    ],
+    threads: [
+      {title:"System Design ERD review", milestone:"System Design", status:"open",
+        comments:[
+          {author:"Md. Sabab Zulfiker", role:"Supervisor", initials:"SZ", text:"Looks solid overall add a version_history table so file versioning is explicit in the schema."},
+          {author:"Meherab Hossen Opi", role:"Student", initials:"MO", text:"Good catch, adding it today and will re-upload the ERD."},
+        ]},
+      {title:"SRS final review", milestone:"Requirement Analysis", status:"approved",
+        comments:[{author:"Md. Sabab Zulfiker", role:"Supervisor", initials:"SZ", text:"Approved. Milestone marked complete proceed to system design phase."}]}
+    ],
+    team: [
+      {name:"Md. Ehasan Mahmud", email:"ehasan@gmail.com", role:"student", status:"joined"},
+      {name:"Meherab Hossen Opi", email:"meherabhossen4@gmail.com", role:"student", status:"joined"},
+      {name:"Md. Sabab Zulfiker", email:"supervisor@gmail.com", role:"supervisor", status:"joined"},
+    ]
+  }
+];
+
+function currentProject(){ return projects.find(p=>p.id===currentProjectId) || null; }
+function projectsForUser(){
+  return projects.filter(p => p.team.some(m=>m.email.toLowerCase()===currentUser.email.toLowerCase()));
+}
+function canEdit(){ return true; } /* every role gets full edit rights per workspace policy */
+function isReviewer(){ return currentUser.role==='supervisor' || currentUser.role==='cosupervisor'; }
+
+/* ================= LOGIN / SIGNUP ================= */
+const loginGrid = document.getElementById('loginGrid');
+for(let i=0;i<32;i++){ const el=document.createElement('i'); if(Math.random()<0.4) el.classList.add('on'); loginGrid.appendChild(el); }
+
+function setAuthTab(tab){
+  document.getElementById('tabSignin').classList.toggle('active', tab==='signin');
+  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+  document.getElementById('panelSignin').style.display = tab==='signin' ? 'block':'none';
+  document.getElementById('panelSignup').style.display = tab==='signup' ? 'block':'none';
+}
+
+document.getElementById('signupRoleSelect').addEventListener('click', e=>{
+  const btn = e.target.closest('.role-btn'); if(!btn) return;
+  document.querySelectorAll('#signupRoleSelect .role-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const role = btn.dataset.role;
+  document.getElementById('suIdLabel').textContent = role==='student' ? 'Student ID' : 'Designation';
+  document.getElementById('suId').placeholder = role==='student' ? 'e.g. 202122104028' : 'e.g. Lecturer, Dept. of CSE';
+});
+
+function login(){
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pass = document.getElementById('loginPass').value;
+  const acc = accounts.find(a=>a.email.toLowerCase()===email && a.password===pass);
+  const err = document.getElementById('signinErr');
+  if(!acc){ err.classList.add('show'); return; }
+  err.classList.remove('show');
+  enterApp(acc);
+}
+
+function signup(){
+  const role = document.querySelector('#signupRoleSelect .role-btn.active').dataset.role;
+  const name = document.getElementById('suName').value.trim();
+  const email = document.getElementById('suEmail').value.trim().toLowerCase();
+  const idOrTitle = document.getElementById('suId').value.trim();
+  const pass = document.getElementById('suPass').value;
+  const err = document.getElementById('signupErr');
+  if(!name || !email || !pass){ return; }
+  if(accounts.some(a=>a.email.toLowerCase()===email)){ err.classList.add('show'); return; }
+  err.classList.remove('show');
+  const acc = {name, email, password:pass, role, idOrTitle};
+  accounts.push(acc);
+
+  /* auto-join any project that already invited this email */
+  projects.forEach(p=>{
+    p.team.forEach(m=>{ if(m.email.toLowerCase()===email) m.status='joined'; });
+  });
+  enterApp(acc);
+}
+
+function enterApp(acc){
+  currentUser = {name:acc.name, email:acc.email, role:acc.role, initials:initials(acc.name), color:colorFor(acc.email)};
+  document.getElementById('view-login').style.display='none';
+  document.getElementById('view-app').classList.add('active');
+  document.getElementById('sideName').textContent = currentUser.name;
+  document.getElementById('sideRole').textContent = ROLE_LABELS[currentUser.role];
+  document.getElementById('sideAv').textContent = currentUser.initials;
+  document.getElementById('sideAv').style.background = currentUser.color;
+
+  const mine = projectsForUser();
+  currentProjectId = mine.length ? mine[0].id : null;
+  renderProjSwitcher();
+  showViewForProjectState();
+}
+
+function logout(){
+  document.getElementById('view-app').classList.remove('active');
+  document.getElementById('view-login').style.display='grid';
+  currentUser = null; currentProjectId = null;
+  document.getElementById('signinErr').classList.remove('show');
+  document.getElementById('signupErr').classList.remove('show');
+}
+
+function showViewForProjectState(){
+  document.querySelectorAll('.navitem').forEach(b=>b.style.display = currentProjectId ? '' : 'none');
+  document.getElementById('quickAddBtn').style.display = currentProjectId ? '' : 'none';
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  if(!currentProjectId){
+    document.getElementById('v-onboarding').classList.add('active');
+    document.getElementById('topTitle').textContent = 'Get started';
+  } else {
+    document.querySelectorAll('.navitem').forEach(b=>b.classList.remove('active'));
+    document.querySelector('.navitem[data-view="dashboard"]').classList.add('active');
+    document.getElementById('v-dashboard').classList.add('active');
+    document.getElementById('topTitle').textContent = 'Dashboard';
+    renderAll();
+  }
+}
+
+/* ================= PROJECT SWITCHER ================= */
+function renderProjSwitcher(){
+  const proj = currentProject();
+  document.getElementById('projSwitchLabel').textContent = proj ? proj.title : 'No thesis yet';
+  const dd = document.getElementById('projDropdown');
+  const mine = projectsForUser();
+  dd.innerHTML = mine.map(p=>`<div class="proj-opt ${p.id===currentProjectId?'current':''}" onclick="switchProject(${p.id})">${p.title}</div>`).join('')
+    + `<div class="proj-new" onclick="openThesisModal()">+ New thesis</div>`;
+}
+function toggleProjSwitch(){ document.getElementById('projDropdown').classList.toggle('open'); }
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.proj-switch')) document.getElementById('projDropdown').classList.remove('open');
+});
+function switchProject(id){
+  currentProjectId = id;
+  document.getElementById('projDropdown').classList.remove('open');
+  renderProjSwitcher();
+  showViewForProjectState();
+}
+
+/* ================= NAV ================= */
+document.querySelectorAll('.navitem').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.navitem').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('v-'+btn.dataset.view).classList.add('active');
+    document.getElementById('topTitle').textContent = btn.textContent.trim();
+  });
+});
+function toggleNotif(){ document.getElementById('notifPanel').classList.toggle('open'); }
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.notif-panel') && !e.target.closest('.icon-btn')) document.getElementById('notifPanel').classList.remove('open');
+});
+function quickAdd(){
+  const view = document.querySelector('.navitem.active')?.dataset.view;
+  if(view==='tasks') openTaskModal();
+  else if(view==='journal') openJournalModal();
+  else if(view==='files') openFileModal();
+  else if(view==='meetings') openMeetingModal();
+  else if(view==='milestones') openMilestoneModal();
+  else if(view==='team') openInviteModal();
+  else openTaskModal();
+}
+function avEl(initials, size){
+  const col = AVATARS[initials] || colorFor(initials);
+  return `<div class="av" style="background:${col};${size?`width:${size}px;height:${size}px;font-size:0.6rem;`:''}">${initials}</div>`;
+}
+
+/* ================= RENDER: DASHBOARD ================= */
+function renderDashboard(){
+  const p = currentProject(); if(!p) return;
+  const done = p.milestones.filter(m=>m.status==='complete'||m.status==='approved').length;
+  document.getElementById('statMilestones').textContent = `${done} / ${p.milestones.length}`;
+  document.getElementById('statTasks').textContent = p.tasks.filter(t=>t.col!=='done').length;
+  document.getElementById('statFeedback').textContent = p.threads.filter(t=>t.status==='open').length;
+  const nextM = p.meetings.find(m=>m.status==='upcoming');
+  document.getElementById('statMeeting').textContent = nextM ? `${nextM.d1} ${nextM.d2}` : ' ';
+  document.getElementById('progressTitle').textContent = p.title;
+  const pct = Math.round((done/p.milestones.length)*100) || 0;
+  document.getElementById('progressPct').textContent = pct+'%';
+  document.getElementById('progressBarFill').style.width = pct+'%';
+
+  const feed = document.getElementById('activityFeed');
+  const items = [];
+  p.threads.forEach(t=> t.comments.slice(-1).forEach(c=> items.push({who:c.initials, text:`commented on <b>${t.title}</b>`})));
+  p.journal.slice(0,2).forEach(j=> items.push({who:initials(j.author), text:`logged a journal entry <b>${j.week}</b>`}));
+  feed.innerHTML = items.length ? items.map(i=>`<div class="activity-row">${avEl(i.who,26)}<div>${i.text}</div></div>`).join('') : '<div class="empty">No activity yet.</div>';
+
+  const meet = document.getElementById('upcomingMeetings');
+  const up = p.meetings.filter(m=>m.status==='upcoming');
+  meet.innerHTML = up.length ? up.map(m=>`<div class="meeting-row"><div class="d">${m.d1} ${m.d2} ${m.month||''} · ${m.time}</div><div class="t">${m.title}</div></div>`).join('') : '<div class="empty">No upcoming meetings.</div>';
+}
+
+/* ================= RENDER: MILESTONES ================= */
+function renderMilestones(){
+  const p = currentProject(); if(!p) return;
+  const el = document.getElementById('milestonesList'); el.innerHTML='';
+  if(!p.milestones.length){ el.innerHTML='<div class="empty">No milestones yet add your plan above.</div>'; return; }
+  p.milestones.forEach(m=>{
+    el.innerHTML += `<div class="milestone-row">
+      <div class="m-info"><b>${m.name}</b><div class="meta">${m.week}</div></div>
+      <span class="status-pill ${m.status}">${statusLabel(m.status)}</span>
+      ${isReviewer() && m.status!=='approved' ? `<button class="btn btn-outline btn-tiny" onclick="approveMilestone(${m.id})">Approve</button>` : ''}
+      <button class="icon-mini" onclick="openMilestoneModal(${m.id})" title="Edit">✎</button>
+      <button class="icon-mini danger" onclick="deleteMilestone(${m.id})" title="Delete">✕</button>
+    </div>`;
+  });
+}
+function statusLabel(s){ return {planned:"Planned", inprogress:"In progress", complete:"Complete", approved:"Approved"}[s] || s; }
+function approveMilestone(id){
+  const p = currentProject(); const m = p.milestones.find(x=>x.id===id);
+  if(m){ m.status='approved'; renderMilestones(); renderDashboard(); }
+}
+function deleteMilestone(id){
+  const p = currentProject();
+  p.milestones = p.milestones.filter(m=>m.id!==id);
+  renderMilestones(); renderDashboard();
+}
+
+/* ================= RENDER: TASKS (KANBAN) ================= */
+const COLS = [{id:'todo',label:'To do'},{id:'inprogress',label:'In progress'},{id:'review',label:'In review'},{id:'done',label:'Done'}];
+function renderKanban(){
+  const p = currentProject(); if(!p) return;
+  const board = document.getElementById('kanbanBoard'); board.innerHTML='';
+  COLS.forEach(col=>{
+    const items = p.tasks.filter(t=>t.col===col.id);
+    const colEl = document.createElement('div');
+    colEl.className='kcol'; colEl.dataset.col=col.id;
+    colEl.innerHTML = `<h4>${col.label} <span>${items.length}</span></h4>`;
+    items.forEach(t=>{
+      const card = document.createElement('div');
+      card.className='kcard'; card.draggable=true; card.dataset.id=t.id;
+      card.innerHTML = `<div class="kactions"><button class="icon-mini" onclick="event.stopPropagation();openTaskModal(${t.id})" title="Edit">✎</button><button class="icon-mini danger" onclick="event.stopPropagation();deleteTask(${t.id})" title="Delete">✕</button></div>
+        <span class="tag">${t.tag}</span>${t.title}<div class="foot">${avEl(t.assignee,22)}<span class="wk">${t.week}</span></div>`;
+      card.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', t.id); });
+      colEl.appendChild(card);
+    });
+    colEl.addEventListener('dragover', e=>{ e.preventDefault(); colEl.classList.add('dragover'); });
+    colEl.addEventListener('dragleave', ()=> colEl.classList.remove('dragover'));
+    colEl.addEventListener('drop', e=>{
+      e.preventDefault(); colEl.classList.remove('dragover');
+      const id = Number(e.dataTransfer.getData('text/plain'));
+      const task = p.tasks.find(t=>t.id===id);
+      if(task){ task.col = col.id; renderKanban(); }
+    });
+    board.appendChild(colEl);
+  });
+}
+function deleteTask(id){ const p=currentProject(); p.tasks = p.tasks.filter(t=>t.id!==id); renderKanban(); }
+
+/* ================= RENDER: JOURNAL ================= */
+function renderJournal(){
+  const p = currentProject(); if(!p) return;
+  const el = document.getElementById('journalList'); el.innerHTML='';
+  if(!p.journal.length){ el.innerHTML='<div class="empty">No entries yet.</div>'; return; }
+  p.journal.forEach((e,idx)=>{
+    el.innerHTML += `<div class="journal-entry"><div class="wkmark">${e.week}</div>
+      <div class="body"><b>${e.author}</b><span class="meta">${e.week} entry</span><p style="margin-top:6px;">${e.text}</p></div>
+      <div class="jactions"><button class="icon-mini" onclick="openJournalModal(${idx})" title="Edit">✎</button><button class="icon-mini danger" onclick="deleteJournal(${idx})" title="Delete">✕</button></div>
+    </div>`;
+  });
+}
+function deleteJournal(idx){ const p=currentProject(); p.journal.splice(idx,1); renderJournal(); }
+
+/* ================= RENDER: FILES ================= */
+function renderFiles(){
+  const p = currentProject(); if(!p) return;
+  const el = document.getElementById('filesTable'); el.innerHTML='';
+  if(!p.files.length){ el.innerHTML='<tr><td colspan="6" class="empty">No files uploaded yet.</td></tr>'; return; }
+  p.files.forEach((f,idx)=>{
+    el.innerHTML += `<tr><td>${f.name}</td><td><span class="pill">${f.milestone}</span></td><td class="mono">${f.version}</td><td>${f.by}</td><td class="mono">${f.date}</td>
+      <td style="display:flex;gap:6px;"><button class="icon-mini" onclick="openFileModal(${idx})" title="Edit">✎</button><button class="icon-mini danger" onclick="deleteFile(${idx})" title="Delete">✕</button></td></tr>`;
+  });
+}
+function deleteFile(idx){ const p=currentProject(); p.files.splice(idx,1); renderFiles(); }
+
+/* ================= RENDER: MEETINGS ================= */
+function renderMeetings(){
+  const p = currentProject(); if(!p) return;
+  const el = document.getElementById('meetingsList'); el.innerHTML='';
+  if(!p.meetings.length){ el.innerHTML='<div class="empty">No meetings scheduled.</div>'; return; }
+  p.meetings.forEach((m,idx)=>{
+    el.innerHTML += `<div class="meeting-card">
+      <div class="meeting-date"><div class="d1">${m.d1}</div><div class="d2">${m.d2}</div></div>
+      <div class="info"><b>${m.title}</b><div class="meta">${m.time} · ${m.status==='done'?'Completed':'Upcoming'}</div></div>
+      <div class="avatars-row">${m.attendees.map(a=>avEl(a,28)).join('')}</div>
+      <div class="mactions"><button class="icon-mini" onclick="openMeetingModal(${idx})" title="Edit">✎</button><button class="icon-mini danger" onclick="deleteMeeting(${idx})" title="Delete">✕</button></div>
+    </div>`;
+  });
+}
+function deleteMeeting(idx){ const p=currentProject(); p.meetings.splice(idx,1); renderMeetings(); renderDashboard(); }
+
+/* ================= RENDER: FEEDBACK ================= */
+function renderThreads(){
+  const p = currentProject(); if(!p) return;
+  const el = document.getElementById('threadsList'); el.innerHTML='';
+  if(!p.threads.length){ el.innerHTML='<div class="empty">No feedback threads yet.</div>'; return; }
+  p.threads.forEach((th, idx)=>{
+    const commentsHtml = th.comments.map(c=>`<div class="comment">${avEl(c.initials,30)}<div class="body"><b>${c.author}</b><span class="role">${c.role}</span><p>${c.text}</p></div></div>`).join('');
+    const verdict = isReviewer() ? `<div class="verdict-actions">
+        <button class="btn btn-outline btn-tiny" onclick="setThreadStatus(${idx},'approved')">Approve</button>
+        <button class="btn btn-outline btn-tiny" onclick="setThreadStatus(${idx},'changes')">Request changes</button>
+      </div>` : '';
+    el.innerHTML += `<div class="thread">
+      <div class="thead"><b>${th.title}</b><div class="thead-right"><span class="pill">${th.milestone}</span><span class="status-pill ${th.status==='approved'?'approved':th.status==='changes'?'complete':'inprogress'}">${threadStatusLabel(th.status)}</span></div></div>
+      ${commentsHtml}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+        ${verdict}
+      </div>
+      <div class="reply-row"><input type="text" placeholder="Write a reply…" id="reply-${idx}"><button class="btn btn-primary btn-sm" onclick="addReply(${idx})">Reply</button></div>
+    </div>`;
+  });
+}
+function threadStatusLabel(s){ return {open:"Open", approved:"Approved", changes:"Changes requested"}[s] || s; }
+function setThreadStatus(idx, s){ const p=currentProject(); p.threads[idx].status=s; renderThreads(); }
+function addReply(idx){
+  const input = document.getElementById('reply-'+idx);
+  if(!input.value.trim()) return;
+  const p = currentProject();
+  p.threads[idx].comments.push({author:currentUser.name, role:ROLE_LABELS[currentUser.role], initials:currentUser.initials, text:input.value.trim()});
+  renderThreads();
+}
+
+/* ================= RENDER: TEAM ================= */
+function renderTeam(){
+  const p = currentProject(); if(!p) return;
+  const el = document.getElementById('teamTable'); el.innerHTML='';
+  p.team.forEach((m,idx)=>{
+    el.innerHTML += `<tr><td style="display:flex;align-items:center;gap:10px;">${avEl(initials(m.name||m.email),28)}${m.name||'(pending)'}</td>
+      <td><span class="role-badge ${m.role}">${ROLE_LABELS[m.role]}</span></td>
+      <td>${m.email}</td>
+      <td><span class="status-tag ${m.status}">${m.status==='joined'?'Joined':'Invited'}</span></td>
+      <td style="display:flex;gap:6px;"><button class="icon-mini" onclick="openInviteModal(${idx})" title="Edit">✎</button><button class="icon-mini danger" onclick="removeTeamMember(${idx})" title="Remove">✕</button></td>
+    </tr>`;
+  });
+}
+function removeTeamMember(idx){ const p=currentProject(); p.team.splice(idx,1); renderTeam(); }
+
+function renderAll(){
+  renderProjSwitcher(); renderDashboard(); renderMilestones(); renderKanban(); renderJournal(); renderFiles(); renderMeetings(); renderThreads(); renderTeam();
+}
+
+/* ================= MODALS ================= */
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+function openModal(html){ document.getElementById('modalBody').innerHTML = html; document.getElementById('overlay').classList.add('open'); }
+document.getElementById('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') closeModal(); });
+
+/* ---- New Thesis (create-project) modal ---- */
+let thesisRowCount = 0;
+function openThesisModal(){
+  thesisRowCount = 0;
+  openModal(`
+    <h3>Create a thesis</h3>
+    <p class="msub">Set the plan once students and supervisors will share this workspace.</p>
+    <div class="field"><label>Thesis title</label><input id="tTitle" type="text" placeholder="e.g. ML-based Detection of Horizontal BAC in REST APIs"></div>
+    <div class="field"><label>Description</label><textarea id="tDesc" placeholder="One or two lines on what this thesis covers."></textarea></div>
+    <div class="field"><label>Milestones & planning</label>
+      <div id="tMilestoneRows"></div>
+      <button type="button" class="add-row-btn" onclick="addThesisMilestoneRow()">+ Add milestone</button>
+    </div>
+    <div class="field"><label>Supervisor email</label><input id="tSupEmail" type="text" placeholder="supervisor@gmail.com"></div>
+    <div class="field"><label>Co-supervisor email (optional)</label><input id="tCoEmail" type="text" placeholder="cosupervisor@gmail.com"></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitThesis()">Create thesis</button></div>
+  `);
+  addThesisMilestoneRow(); addThesisMilestoneRow();
+}
+function addThesisMilestoneRow(){
+  const wrap = document.getElementById('tMilestoneRows');
+  const i = thesisRowCount++;
+  const row = document.createElement('div');
+  row.className='mrow';
+  row.innerHTML = `<div class="field"><input type="text" placeholder="Milestone name" id="tm-name-${i}"></div>
+    <div class="field wk"><input type="text" placeholder="Week" id="tm-week-${i}"></div>
+    <button type="button" class="icon-mini danger" onclick="this.parentElement.remove()">✕</button>`;
+  wrap.appendChild(row);
+}
+function submitThesis(){
+  const title = document.getElementById('tTitle').value.trim();
+  if(!title) return;
+  const milestones = [];
+  document.querySelectorAll('#tMilestoneRows .mrow').forEach(row=>{
+    const nameInput = row.querySelector('input[id^="tm-name-"]');
+    const weekInput = row.querySelector('input[id^="tm-week-"]');
+    if(nameInput && nameInput.value.trim()){
+      milestones.push({id: milestoneIdCounter++, name: nameInput.value.trim(), week: weekInput.value.trim()||' ', status:'planned'});
+    }
+  });
+  const team = [{name: currentUser.name, email: currentUser.email, role: currentUser.role, status:'joined'}];
+  const supEmail = document.getElementById('tSupEmail').value.trim().toLowerCase();
+  const coEmail = document.getElementById('tCoEmail').value.trim().toLowerCase();
+  if(supEmail) team.push({name: accounts.find(a=>a.email.toLowerCase()===supEmail)?.name || '', email: supEmail, role:'supervisor', status: accounts.some(a=>a.email.toLowerCase()===supEmail)?'joined':'invited'});
+  if(coEmail) team.push({name: accounts.find(a=>a.email.toLowerCase()===coEmail)?.name || '', email: coEmail, role:'cosupervisor', status: accounts.some(a=>a.email.toLowerCase()===coEmail)?'joined':'invited'});
+
+  const proj = {
+    id: Date.now(),
+    title, description: document.getElementById('tDesc').value.trim(),
+    milestones, tasks:[], journal:[], files:[], meetings:[], threads:[], team
+  };
+  projects.push(proj);
+  currentProjectId = proj.id;
+  closeModal(); renderProjSwitcher(); showViewForProjectState();
+}
+
+/* ---- Milestone modal (add/edit) ---- */
+function openMilestoneModal(id){
+  const p = currentProject();
+  const m = id ? p.milestones.find(x=>x.id===id) : null;
+  openModal(`
+    <h3>${m?'Edit milestone':'Add milestone'}</h3>
+    <div class="field"><label>Name</label><input id="msName" type="text" value="${m?m.name:''}" placeholder="e.g. Testing"></div>
+    <div class="field"><label>Week</label><input id="msWeek" type="text" value="${m?m.week:''}" placeholder="e.g. W13–W14"></div>
+    <div class="field"><label>Status</label>
+      <select id="msStatus">
+        <option value="planned" ${m&&m.status==='planned'?'selected':''}>Planned</option>
+        <option value="inprogress" ${m&&m.status==='inprogress'?'selected':''}>In progress</option>
+        <option value="complete" ${m&&m.status==='complete'?'selected':''}>Complete</option>
+        <option value="approved" ${m&&m.status==='approved'?'selected':''}>Approved</option>
+      </select>
+    </div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitMilestone(${id||'null'})">${m?'Save changes':'Add milestone'}</button></div>
+  `);
+}
+function submitMilestone(id){
+  const p = currentProject();
+  const name = document.getElementById('msName').value.trim(); if(!name) return;
+  const week = document.getElementById('msWeek').value.trim()||' ';
+  const status = document.getElementById('msStatus').value;
+  if(id){ const m = p.milestones.find(x=>x.id===id); m.name=name; m.week=week; m.status=status; }
+  else { p.milestones.push({id:milestoneIdCounter++, name, week, status}); }
+  closeModal(); renderMilestones(); renderDashboard();
+}
+
+/* ---- Task modal (add/edit) ---- */
+function openTaskModal(id){
+  const p = currentProject();
+  const t = id ? p.tasks.find(x=>x.id===id) : null;
+  const milestoneOpts = p.milestones.map(m=>`<option value="${m.name}" ${t&&t.tag===m.name?'selected':''}>${m.name}</option>`).join('');
+  openModal(`
+    <h3>${t?'Edit task':'Add task'}</h3>
+    <div class="field"><label>Title</label><input id="mTitle" type="text" value="${t?t.title:''}" placeholder="e.g. Build meeting scheduler UI"></div>
+    <div class="field"><label>Milestone</label><select id="mTag">${milestoneOpts}<option value="General" ${t&&t.tag==='General'?'selected':''}>General</option></select></div>
+    <div class="field"><label>Assignee</label>
+      <select id="mAssignee">
+        <option value="EM" ${t&&t.assignee==='EM'?'selected':''}>Md. Ehasan Mahmud</option>
+        <option value="MO" ${t&&t.assignee==='MO'?'selected':''}>Meherab Hossen Opi</option>
+        <option value="SZ" ${t&&t.assignee==='SZ'?'selected':''}>Md. Sabab Zulfiker</option>
+      </select>
+    </div>
+    <div class="field"><label>Week</label><input id="mWeek" type="text" value="${t?t.week:''}" placeholder="e.g. W7–W8"></div>
+    <div class="field"><label>Column</label>
+      <select id="mCol">
+        <option value="todo" ${t&&t.col==='todo'?'selected':''}>To do</option>
+        <option value="inprogress" ${t&&t.col==='inprogress'?'selected':''}>In progress</option>
+        <option value="review" ${t&&t.col==='review'?'selected':''}>In review</option>
+        <option value="done" ${t&&t.col==='done'?'selected':''}>Done</option>
+      </select>
+    </div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitTask(${id||'null'})">${t?'Save changes':'Add task'}</button></div>
+  `);
+}
+function submitTask(id){
+  const p = currentProject();
+  const title = document.getElementById('mTitle').value.trim(); if(!title) return;
+  const vals = { title, tag:document.getElementById('mTag').value, assignee:document.getElementById('mAssignee').value, week:document.getElementById('mWeek').value.trim()||' ', col:document.getElementById('mCol').value };
+  if(id){ Object.assign(p.tasks.find(t=>t.id===id), vals); }
+  else { p.tasks.push({id:taskIdCounter++, ...vals}); }
+  closeModal(); renderKanban(); renderDashboard();
+}
+
+/* ---- Journal modal (add/edit) ---- */
+function openJournalModal(idx){
+  const p = currentProject();
+  const e = (idx!==undefined) ? p.journal[idx] : null;
+  openModal(`
+    <h3>${e?'Edit entry':'New journal entry'}</h3>
+    <div class="field"><label>Week</label><input id="jWeek" type="text" value="${e?e.week:''}" placeholder="e.g. W7"></div>
+    <div class="field"><label>Entry</label><textarea id="jText" placeholder="What did the team work on this week?">${e?e.text:''}</textarea></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitJournal(${idx!==undefined?idx:'null'})">${e?'Save changes':'Save entry'}</button></div>
+  `);
+}
+function submitJournal(idx){
+  const p = currentProject();
+  const text = document.getElementById('jText').value.trim(); if(!text) return;
+  const week = document.getElementById('jWeek').value.trim()||'W?';
+  if(idx!==null && idx!==undefined && p.journal[idx]){ p.journal[idx].week=week; p.journal[idx].text=text; }
+  else { p.journal.unshift({week, author:currentUser.name, text}); }
+  closeModal(); renderJournal(); renderDashboard();
+}
+
+/* ---- File modal (add/edit) ---- */
+function openFileModal(idx){
+  const p = currentProject();
+  const f = (idx!==undefined) ? p.files[idx] : null;
+  const milestoneOpts = p.milestones.map(m=>`<option value="${m.name}" ${f&&f.milestone===m.name?'selected':''}>${m.name}</option>`).join('');
+  openModal(`
+    <h3>${f?'Edit file':'Upload file'}</h3>
+    <div class="field"><label>File name</label><input id="fName" type="text" value="${f?f.name:''}" placeholder="e.g. TestPlan_v1.docx"></div>
+    <div class="field"><label>Milestone</label><select id="fMilestone">${milestoneOpts}<option value="General" ${f&&f.milestone==='General'?'selected':''}>General</option></select></div>
+    <div class="field"><label>Version</label><input id="fVersion" type="text" value="${f?f.version:''}" placeholder="e.g. v1"></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitFile(${idx!==undefined?idx:'null'})">${f?'Save changes':'Upload'}</button></div>
+  `);
+}
+function submitFile(idx){
+  const p = currentProject();
+  const name = document.getElementById('fName').value.trim(); if(!name) return;
+  const vals = {name, milestone:document.getElementById('fMilestone').value, version:document.getElementById('fVersion').value.trim()||'v1', by:currentUser.name, date:'Today'};
+  if(idx!==null && idx!==undefined && p.files[idx]){ Object.assign(p.files[idx], vals); }
+  else { p.files.unshift(vals); }
+  closeModal(); renderFiles();
+}
+
+/* ---- Meeting modal (add/edit) ---- */
+function openMeetingModal(idx){
+  const p = currentProject();
+  const m = (idx!==undefined) ? p.meetings[idx] : null;
+  openModal(`
+    <h3>${m?'Edit meeting':'Schedule meeting'}</h3>
+    <div class="field"><label>Title</label><input id="mmTitle" type="text" value="${m?m.title:''}" placeholder="e.g. Backend progress check-in"></div>
+    <div class="field"><label>Date</label><input id="mmDate" type="date"></div>
+    <div class="field"><label>Time</label><input id="mmTime" type="time" value="${m?'':''}"></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitMeeting(${idx!==undefined?idx:'null'})">${m?'Save changes':'Schedule'}</button></div>
+  `);
+}
+function submitMeeting(idx){
+  const p = currentProject();
+  const title = document.getElementById('mmTitle').value.trim(); if(!title) return;
+  const dateVal = document.getElementById('mmDate').value;
+  let d1='TBD', d2='--', month='';
+  if(dateVal){ const dt=new Date(dateVal+'T00:00:00'); d1=dt.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase(); d2=String(dt.getDate()).padStart(2,'0'); month=dt.toLocaleDateString('en-US',{month:'short'}); }
+  const timeVal = document.getElementById('mmTime').value || ' ';
+  if(idx!==null && idx!==undefined && p.meetings[idx]){ Object.assign(p.meetings[idx], {title, time:timeVal, ...(dateVal?{d1,d2,month}:{})}); }
+  else { p.meetings.unshift({d1,d2,month,title,time:timeVal,attendees:["EM","MO","SZ"],status:'upcoming'}); }
+  closeModal(); renderMeetings(); renderDashboard();
+}
+
+/* ---- New feedback thread ---- */
+function openThreadModal(){
+  const p = currentProject();
+  const milestoneOpts = p.milestones.map(m=>`<option value="${m.name}">${m.name}</option>`).join('');
+  openModal(`
+    <h3>New feedback thread</h3>
+    <div class="field"><label>Title</label><input id="thTitle" type="text" placeholder="e.g. Backend API review"></div>
+    <div class="field"><label>Milestone</label><select id="thMilestone">${milestoneOpts}<option value="General">General</option></select></div>
+    <div class="field"><label>Opening comment</label><textarea id="thComment" placeholder="What needs review?"></textarea></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitThread()">Start thread</button></div>
+  `);
+}
+function submitThread(){
+  const p = currentProject();
+  const title = document.getElementById('thTitle').value.trim(); if(!title) return;
+  const comment = document.getElementById('thComment').value.trim();
+  const comments = comment ? [{author:currentUser.name, role:ROLE_LABELS[currentUser.role], initials:currentUser.initials, text:comment}] : [];
+  p.threads.unshift({title, milestone:document.getElementById('thMilestone').value, status:'open', comments});
+  closeModal(); renderThreads(); renderDashboard();
+}
+
+/* ---- Invite / edit team member ---- */
+function openInviteModal(idx){
+  const p = currentProject();
+  const m = (idx!==undefined) ? p.team[idx] : null;
+  openModal(`
+    <h3>${m?'Edit member':'Invite member'}</h3>
+    <p class="msub">${m?'':'They will join automatically once they create a ThesisSync account with this email.'}</p>
+    <div class="field"><label>Email</label><input id="ivEmail" type="text" value="${m?m.email:''}" placeholder="name@gmail.com"></div>
+    <div class="field"><label>Role</label>
+      <select id="ivRole">
+        <option value="student" ${m&&m.role==='student'?'selected':''}>Student</option>
+        <option value="supervisor" ${m&&m.role==='supervisor'?'selected':''}>Supervisor</option>
+        <option value="cosupervisor" ${m&&m.role==='cosupervisor'?'selected':''}>Co-supervisor</option>
+      </select>
+    </div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="submitInvite(${idx!==undefined?idx:'null'})">${m?'Save changes':'Send invite'}</button></div>
+  `);
+}
+function submitInvite(idx){
+  const p = currentProject();
+  const email = document.getElementById('ivEmail').value.trim().toLowerCase(); if(!email) return;
+  const role = document.getElementById('ivRole').value;
+  const acc = accounts.find(a=>a.email.toLowerCase()===email);
+  if(idx!==null && idx!==undefined && p.team[idx]){ Object.assign(p.team[idx], {email, role, name: acc?acc.name:p.team[idx].name, status: acc?'joined':'invited'}); }
+  else { p.team.push({name: acc?acc.name:'', email, role, status: acc?'joined':'invited'}); }
+  closeModal(); renderTeam();
+}
+
+/* init */
+setAuthTab('signin');
+</script>
+</body>
+</html>
